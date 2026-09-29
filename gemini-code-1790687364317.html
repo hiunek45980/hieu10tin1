@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Study Hub - Trợ Lý Học Tập Thông Minh</title>
+    <!-- Nhập font chữ Inter hiện đại và thư viện Icon FontAwesome -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary-color: #4f46e5;
+            --primary-hover: #4338ca;
+            --bg-color: #f8fafc;
+            --card-bg: #ffffff;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --border-color: #e2e8f0;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+        }
+
+        header {
+            background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+            color: white;
+            padding: 2.5rem 1rem;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 2.2rem;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+        }
+
+        header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: -30px auto 40px auto;
+            padding: 0 20px;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            padding: 25px;
+            margin-bottom: 25px;
+            border: 1px solid var(--border-color);
+        }
+
+        .section-title {
+            font-size: 1.3rem;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 600;
+        }
+
+        /* Phần Prompt AI */
+        .prompt-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 15px;
+        }
+
+        .prompt-box {
+            background: #f1f5f9;
+            border-radius: 8px;
+            padding: 15px;
+            border-left: 4px solid var(--primary-color);
+            transition: transform 0.2s;
+        }
+
+        .prompt-box:hover {
+            transform: translateY(-3px);
+        }
+
+        .prompt-box h4 {
+            font-size: 1rem;
+            margin-bottom: 8px;
+            color: #334155;
+        }
+
+        .prompt-box code {
+            display: block;
+            background: #e2e8f0;
+            padding: 8px;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            color: #0f172a;
+            margin-bottom: 10px;
+            word-break: break-word;
+        }
+
+        .btn {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            transition: background 0.2s;
+        }
+
+        .btn:hover {
+            background: var(--primary-hover);
+        }
+
+        /* Phần Flashcard tương tác */
+        .flashcard-container {
+            text-align: center;
+        }
+
+        .flashcard {
+            background: linear-gradient(145deg, #ffffff, #f1f5f9);
+            border: 2px dashed var(--primary-color);
+            border-radius: 12px;
+            height: 180px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            cursor: pointer;
+            margin-bottom: 15px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+            transition: all 0.3s ease;
+        }
+
+        .flashcard:hover {
+            background: #eef2ff;
+        }
+
+        .flashcard-content {
+            font-size: 1.2rem;
+            font-weight: 500;
+            color: #1e293b;
+        }
+
+        .flashcard-controls {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        /* Phần mã QR & Thông tin trưng bày */
+        .footer-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .qr-mockup {
+            background: #ffffff;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            text-align: center;
+        }
+
+        .qr-mockup i {
+            font-size: 80px;
+            color: #334155;
+            margin-bottom: 5px;
+        }
+
+        .qr-mockup p {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        @media(max-width: 768px) {
+            .footer-info {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1><i class="fa-solid fa-robot"></i> AI Study Hub</h1>
+        <p>Trợ lý AI tổng hợp kiến thức, lập sơ đồ tư duy và tạo Flashcard tự động phục vụ tự học suốt đời.</p>
+    </header>
+
+    <div class="container">
+        
+        <!-- Khối 1: Giới thiệu dự án -->
+        <div class="card">
+            <h3 class="section-title"><i class="fa-solid fa-bullseye"></i> Về giải pháp của chúng tôi</h3>
+            <p>Ứng dụng giúp học sinh biến các tài liệu dài hàng trang thành các kiến thức cô đọng, sơ đồ tư duy logic và bộ Flashcard ôn tập trực quan chỉ trong vài giây nhờ Trí tuệ Nhân tạo (AI). Giải pháp thiết thực hưởng ứng <strong>Tuần lễ học tập suốt đời năm 2026</strong> tại trường THPT Chuyên Sơn La.</p>
+        </div>
+
+        <!-- Khối 2: Thư viện Câu lệnh AI (Prompt Library) -->
+        <div class="card">
+            <h3 class="section-title"><i class="fa-solid fa-terminal"></i> Thư viện Prompt AI Học Tập Mẫu</h3>
+            <div class="prompt-grid">
+                
+                <div class="prompt-box">
+                    <h4>1. Tóm tắt lý thuyết & Sơ đồ tư duy</h4>
+                    <code>"Hãy tóm tắt bài học [Tên bài] thành các ý chính ngắn gọn dạng cây thư mục (Mindmap text) để tôi dễ ghi nhớ."</code>
+                    <button class="btn" onclick="copyPrompt(this)"><i class="fa-regular fa-copy"></i> Sao chép lệnh</button>
+                </div>
+
+                <div class="prompt-box">
+                    <h4>2. Giải thích bài toán khó (Step-by-step)</h4>
+                    <code>"Hãy hướng dẫn tôi giải bài toán sau từng bước một, gợi ý tư duy thay vì đưa ngay đáp số: [Dán đề bài]"</code>
+                    <button class="btn" onclick="copyPrompt(this)"><i class="fa-regular fa-copy"></i> Sao chép lệnh</button>
+                </div>
+
+                <div class="prompt-box">
+                    <h4>3. Tạo bộ Flashcard ôn tập</h4>
+                    <code>"Dựa vào nội dung [Dán đoạn văn bản], hãy tạo cho tôi 5 câu hỏi và câu trả lời dạng Flashcard (Mặt trước / Mặt sau) để ôn thi."</code>
+                    <button class="btn" onclick="copyPrompt(this)"><i class="fa-regular fa-copy"></i> Sao chép lệnh</button>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Khối 3: Flashcard Tương Tác Mẫu -->
+        <div class="card flashcard-container">
+            <h3 class="section-title" style="text-align: left;"><i class="fa-solid fa-clone"></i> Trải nghiệm Flashcard AI mẫu</h3>
+            <p style="text-align: left; margin-bottom: 15px; color: var(--text-muted); font-size: 0.95rem;">Nhấn vào thẻ bên dưới để lật xem đáp án (mô phỏng tính năng ôn thi thông minh):</p>
+            
+            <div class="flashcard" onclick="flipCard()">
+                <div class="flashcard-content" id="cardText">
+                    💡 <b>Câu hỏi 1 (Môn Lịch sử):</b> Sự kiện lịch sử nào đánh dấu mốc thành lập Nhà tù Sơn La và năm nào?
+                </div>
+            </div>
+
+            <div class="flashcard-controls">
+                <button class="btn" onclick="prevCard()"><i class="fa-solid fa-arrow-left"></i> Câu trước</button>
+                <button class="btn" onclick="nextCard()">Câu tiếp theo <i class="fa-solid fa-arrow-right"></i></button>
+            </div>
+        </div>
+
+        <!-- Khối 4: Mã QR và Thông tin nhóm -->
+        <div class="card">
+            <div class="footer-info">
+                <div>
+                    <h3 class="section-title"><i class="fa-solid fa-qrcode"></i> Trải nghiệm Bản Web Đầy Đủ</h3>
+                    <p>Quét mã QR bên cạnh để truy cập trực tiếp kho học liệu số và công cụ AI Study Hub trên điện thoại di động tại buổi triển lãm ngày 01/10/2026.</p>
+                    <p style="margin-top: 10px; font-weight: 500; color: var(--primary-color);">📍 Trường THPT Chuyên Sơn La - Chi đoàn dự thi</p>
+                </div>
+                <div class="qr-mockup">
+                    <i class="fa-solid fa-qrcode"></i>
+                    <p>Quét mã QR trải nghiệm</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <footer>
+        <p>&copy; 2026 - AI Study Hub | Sản phẩm dự thi Cuộc thi thiết kế sản phẩm sáng kiến học tập số THPT Chuyên Sơn La.</p>
+    </footer>
+
+    <!-- Đoạn mã Javascript xử lý tương tác đơn giản -->
+    <script>
+        // Dữ liệu mẫu cho Flashcard
+        const flashcards = [
+            {
+                q: "💡 <b>Câu hỏi 1 (Môn Lịch sử):</b> Nhà tù Sơn La được thực dân Pháp thành lập vào năm nào?",
+                a: "🎯 <b>Đáp án:</b> Năm 1908. Nơi đây giam giữ các chiến sĩ cách mạng kiên trung như Tô Hiệu, Lê Duẩn, Trường Chinh..."
+            },
+            {
+                q: "💡 <b>Câu hỏi 2 (Kỹ năng số):</b> 4 Nguyên tắc vàng khi sử dụng AI trong học tập là gì?",
+                a: "🎯 <b>Đáp án:</b> 1. Trung thực học thuật | 2. Kiểm chứng nguồn tin | 3. Bảo mật dữ liệu cá nhân | 4. Không lạm dụng sao chép máy móc."
+            },
+            {
+                q: "💡 <b>Câu hỏi 3 (Môn Tiếng Anh - Unit 1 Smart World 9):</b> Chủ đề của Unit 1 lớp 9 là gì?",
+                a: "🎯 <b>Đáp án:</b> 'English in the World' (Tiếng Anh trên thế giới)."
+            }
+        ];
+
+        let currentIndex = 0;
+        let isAnswer = false;
+
+        function flipCard() {
+            const cardText = document.getElementById("cardText");
+            isAnswer = !isAnswer;
+            if (isAnswer) {
+                cardText.innerHTML = flashcards[currentIndex].a;
+            } else {
+                cardText.innerHTML = flashcards[currentIndex].q;
+            }
+        }
+
+        function nextCard() {
+            currentIndex = (currentIndex + 1) % flashcards.length;
+            isAnswer = false;
+            document.getElementById("cardText").innerHTML = flashcards[currentIndex].q;
+        }
+
+        function prevCard() {
+            currentIndex = (currentIndex - 1 + flashcards.length) % flashcards.length;
+            isAnswer = false;
+            document.getElementById("cardText").innerHTML = flashcards[currentIndex].q;
+        }
+
+        // Hàm sao chép Prompt nhanh
+        function copyPrompt(button) {
+            const codeTag = button.previousElementSibling;
+            navigator.clipboard.writeText(codeTag.innerText);
+            const originalText = button.innerHTML;
+            button.innerHTML = '<i class="fa-solid fa-check"></i> Đã sao chép!';
+            button.style.background = '#10b981';
+            setTimeout(() => {
+                button.innerHTML = originalText;
+                button.style.background = 'var(--primary-color)';
+            }, 2000);
+        }
+    </script>
+</body>
+</html>
